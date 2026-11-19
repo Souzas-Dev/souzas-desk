@@ -1,0 +1,25 @@
+name: Sugerir funcionalidade
+description: Propor uma melhoria para o Souzas Desk
+title: "feat: "
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problema ou necessidade
+      description: Explique qual problema deseja resolver.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Solução proposta
+      description: Descreva como a funcionalidade deve operar.
+    validations:
+      required: true
+
+  - type: textarea
+    id: risks
+    attributes:
+      label: Riscos e observações
+      description: Informe possíveis impactos de segurança.
