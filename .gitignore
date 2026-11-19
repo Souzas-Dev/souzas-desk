@@ -1,0 +1,18 @@
+# Dados locais podem conter informacoes da maquina; NUNCA subir ao GitHub.
+data/
+
+# Arquivos temporarios do Windows / editores
+*.tmp
+*.log
+*.bak
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Evite colocar credenciais no projeto.
+.env
+.env.*
+*.pfx
+*.pem
+*.key
