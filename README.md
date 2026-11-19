@@ -11,7 +11,7 @@
 ![Windows](https://img.shields.io/badge/Windows-10%20%7C%2011-0078D4?logo=windows)
 ![Status](https://img.shields.io/badge/Status-MVP-orange)
 
-Desenvolvido por **Souzas Dev**
+**By Souzas Dev**
 
 [Documentação](docs/INICIANTES.md) •
 [Arquitetura](docs/ARQUITETURA.md) •
@@ -109,6 +109,7 @@ Se a política de execução impedir o script, consulte o [guia de iniciantes](d
 ================================================
             SOUZAS DESK | v0.1.0
           Windows Support Toolkit
+                By Souzas Dev
 ================================================
 
   [1] Informacoes do sistema
@@ -241,7 +242,9 @@ Antes de contribuir, consulte a documentação e evite incluir dados sensíveis,
 
 ## 📄 Licença
 
-O projeto ainda não possui uma licença de software definida. Até a inclusão de um arquivo `LICENSE`, não há autorização geral de reutilização, modificação ou redistribuição.
+O aplicativo exibe o crédito de autoria **`By Souzas Dev`** no menu principal. Consulte o arquivo [NOTICE](NOTICE) para a atribuição do projeto original.
+
+**Licenciamento em definição:** ainda não há um arquivo `LICENSE`. O `NOTICE` informa a autoria, mas não concede direitos de uso, modificação ou redistribuição por si só. A condição de preservação do crédito visível em versões distribuídas por terceiros dependerá da licença escolhida e de revisão jurídica.
 
 ---
 
