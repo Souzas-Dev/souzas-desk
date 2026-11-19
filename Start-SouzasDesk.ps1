@@ -27,6 +27,7 @@ function Show-SDMenu {
     Write-Host '================================================' -ForegroundColor Cyan
     Write-Host '            SOUZAS DESK | v0.1.0              ' -ForegroundColor Cyan
     Write-Host '          Windows Support Toolkit             ' -ForegroundColor Cyan
+    Write-Host '                By Souzas Dev                 ' -ForegroundColor DarkCyan
     Write-Host '================================================' -ForegroundColor Cyan
     Write-Host '  [1] Informacoes do sistema'
     Write-Host '  [2] Configuracao de rede'
