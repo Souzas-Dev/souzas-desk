@@ -1,0 +1,30 @@
+name: Relatar problema
+description: Reportar um comportamento inesperado
+title: "bug: "
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Descrição do problema
+      description: Não inclua dados sensíveis.
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Como reproduzir
+      description: Informe os passos necessários.
+    validations:
+      required: true
+
+  - type: input
+    id: environment
+    attributes:
+      label: Ambiente
+      placeholder: Windows 11 / PowerShell 5.1
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Comportamento esperado

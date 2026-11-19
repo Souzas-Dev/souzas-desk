@@ -1,0 +1,38 @@
+name: CI - Souzas Desk
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  smoke-tests:
+    name: PowerShell 5.1 - Smoke Tests
+    runs-on: windows-2022
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Verificar PowerShell
+        shell: powershell
+        run: |
+          $v = $PSVersionTable.PSVersion
+          Write-Host "PowerShell: $v"
+          if ($v.Major -ne 5 -or $v.Minor -ne 1) {
+            throw 'PowerShell 5.1 esperado'
+          }
+
+      - name: Executar testes
+        shell: powershell
+        run: |
+          & .\tests\Smoke.Tests.ps1
+          if (-not $?) { exit 1 }
