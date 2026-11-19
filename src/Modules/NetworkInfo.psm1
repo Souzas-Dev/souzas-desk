@@ -23,25 +23,82 @@ function Get-SDNetworkInfo {
     }
 }
 
+function Test-SDValidTarget {
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory = $true)]
+        [string]$Target
+    )
+
+    if ([string]::IsNullOrWhiteSpace($Target) -or $Target.Length -gt 253) {
+        return $false
+    }
+
+    $Address = $null
+
+    if ($Target.Contains(':')) {
+        if ($Target -notmatch '^[0-9A-Fa-f:.]+$') {
+            return $false
+        }
+
+        if (-not [System.Net.IPAddress]::TryParse($Target, [ref]$Address)) {
+            return $false
+        }
+
+        return ($Address.AddressFamily -eq [System.Net.Sockets.AddressFamily]::InterNetworkV6)
+    }
+
+    if ($Target -match '^[0-9.]+$') {
+        if ($Target -notmatch '^([0-9]{1,3}\.){3}[0-9]{1,3}$') {
+            return $false
+        }
+
+        if (-not [System.Net.IPAddress]::TryParse($Target, [ref]$Address)) {
+            return $false
+        }
+
+        return ($Address.AddressFamily -eq [System.Net.Sockets.AddressFamily]::InterNetwork)
+    }
+
+    if ($Target -notmatch '^[A-Za-z0-9.-]+$') {
+        return $false
+    }
+
+    foreach ($Label in $Target.Split('.')) {
+        if ($Label.Length -gt 63 -or
+            $Label -notmatch '^[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?$') {
+            return $false
+        }
+    }
+
+    return $true
+}
+
 function Test-SDConnectivity {
     [CmdletBinding()]
     param(
-        [Parameter(Mandatory = $true)][string] $Target
+        [Parameter(Mandatory = $true)]
+        [string]$Target
     )
 
-    # Permite apenas IPs/nomes de host comuns; nao constroi comandos dinamicos.
-    if ($Target.Length -gt 253 -or $Target -notmatch '^[A-Za-z0-9][A-Za-z0-9.\-:]*$') {
-        throw 'Destino invalido. Informe um IP ou nome de host sem espacos.'
+    if (-not (Test-SDValidTarget -Target $Target)) {
+        throw 'Destino invalido. Informe um IPv4, IPv6 ou hostname valido.'
     }
 
-    # Ping pode ser bloqueado por firewall, mesmo com a rede funcionando.
-    $Responded = [bool](Test-Connection -ComputerName $Target -Count 2 -Quiet -ErrorAction SilentlyContinue)
+    $Responded = [bool](
+        Test-Connection -ComputerName $Target -Count 2 -Quiet -ErrorAction SilentlyContinue
+    )
 
     [pscustomobject][ordered]@{
-        Destino           = $Target
-        RespondeuAoPing  = $Responded
-        Observacao       = if ($Responded) { 'O destino respondeu.' } else { 'Sem resposta ICMP; isso nao prova falta de rede.' }
+        Destino          = $Target
+        RespondeuAoPing = $Responded
+        Observacao      = if ($Responded) {
+            'O destino respondeu.'
+        }
+        else {
+            'Sem resposta ICMP; isso nao prova falta de rede.'
+        }
     }
 }
 
-Export-ModuleMember -Function Get-SDNetworkInfo, Test-SDConnectivity
+Export-ModuleMember -Function Get-SDNetworkInfo, Test-SDConnectivity, Test-SDValidTarget
