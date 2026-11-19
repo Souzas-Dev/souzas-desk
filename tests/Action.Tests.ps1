@@ -22,6 +22,9 @@ $Events = New-Object System.Collections.ArrayList
 
 $AuditOK = {
     param($Code, $Status, $Folder)
+    if (-not (Test-Path -LiteralPath $Folder -PathType Container)) {
+        throw 'Pasta de auditoria invalida.'
+    }
     [void]$Events.Add("$Code|$Status")
 }.GetNewClosure()
 
