@@ -1,4 +1,4 @@
-name: CI - Souzas Desk
+﻿name: CI - Souzas Desk
 
 on:
   push:
@@ -12,7 +12,7 @@ permissions:
 
 jobs:
   smoke-tests:
-    name: PowerShell 5.1 - Smoke Tests
+    name: PowerShell 5.1 - Quality Checks
     runs-on: windows-2022
     timeout-minutes: 10
 
@@ -62,3 +62,4 @@ jobs:
         run: |
           & .\tests\Lint.Tests.ps1
           if (-not $?) { exit 1 }
+
