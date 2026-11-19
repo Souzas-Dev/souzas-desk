@@ -1,94 +1,259 @@
-# Souzas Desk
+<div align="center">
 
-**Windows Support Toolkit | v0.1.0 (MVP)**
+# 🖥️ Souzas Desk
 
-Toolkit de suporte técnico para **Windows 10/11**, executado no terminal do **Windows PowerShell 5.1**, com um menu de rotinas de diagnóstico. Desenvolvido como projeto educacional/portfolio da Souzas Dev.
+### Windows Support Toolkit
 
-> **Segurança:** a v0.1 usa apenas consultas e diagnósticos. Não executa SFC, DISM, reparos em disco, instalação de drivers, alteracoes de rede ou comandos remotos. Não precisa ser executada como Administrador.
+**Diagnóstico, automação e suporte técnico para ambientes Windows com PowerShell.**
 
-## Recursos
+![Version](https://img.shields.io/badge/Version-0.1.0-blue)
+![PowerShell](https://img.shields.io/badge/PowerShell-5.1%2B-5391FE?logo=powershell&logoColor=white)
+![Windows](https://img.shields.io/badge/Windows-10%20%7C%2011-0078D4?logo=windows)
+![Status](https://img.shields.io/badge/Status-MVP-orange)
 
-| Menu | Funcao | Impacto |
-| --- | --- | --- |
-| 1 | Sistema operacional, CPU, memória e uptime | Somente leitura |
-| 2 | Interfaces IPv4, gateway e DNS | Somente leitura |
-| 3 | Testar ICMP (ping) para host informado | Envia pacotes ICMP ao destino |
-| 4 | Exportar relatório JSON de diagnóstico | Cria arquivo local, sem IP, hostname ou usuário |
-| 0 | Sair | Encerra o menu |
+Desenvolvido por **Souzas Dev**
 
-Registro local de ações guarda apenas **data/hora, código da ação e status**. Os dados locais ficam em `data/`, ignorada pelo Git.
+[Documentação](docs/INICIANTES.md) •
+[Arquitetura](docs/ARQUITETURA.md) •
+[Segurança](docs/SEGURANCA.md) •
+[Roadmap](docs/ROADMAP.md)
 
-## Requisitos
+</div>
 
-- Windows 10 ou Windows 11;
-- Windows PowerShell 5.1 (nativo no Windows); 
-- Conta de usuário comum, sem privilegios administrativos;
-- Conexao com a rede apenas para testar destinos de rede (opcao 3).
+---
 
-## Como usar
+## 📌 Sobre o projeto
 
-Abra o **Windows PowerShell**, navegue ate a pasta do projeto e execute:
+O **Souzas Desk** é uma ferramenta modular de suporte técnico desenvolvida em PowerShell para facilitar o diagnóstico de computadores Windows.
+
+O projeto busca reunir rotinas de análise, diagnóstico e, futuramente, manutenção em uma interface de terminal organizada, acessível e documentada.
+
+Seu desenvolvimento também tem caráter educacional, permitindo estudar PowerShell, sistemas operacionais, redes, automação e boas práticas de engenharia de software.
+
+### Objetivos
+
+- Facilitar diagnósticos técnicos em Windows.
+- Automatizar consultas repetitivas.
+- Padronizar a coleta de informações.
+- Gerar relatórios técnicos estruturados.
+- Manter registros locais das operações.
+- Evoluir para uma plataforma modular de suporte.
+
+> **Versão atual:** a v0.1.0 é um MVP de diagnóstico. Não executa reparos nem altera configurações do Windows.
+
+---
+
+## ⚙️ Funcionalidades
+
+| Módulo | Descrição | Disponibilidade |
+|---|---|---|
+| Sistema | Informações do Windows, CPU, RAM e uptime | ✅ v0.1 |
+| Rede | Interfaces IPv4, gateway e DNS | ✅ v0.1 |
+| Conectividade | Testes ICMP (ping) | ✅ v0.1 |
+| Relatórios | Exportação local em JSON | ✅ v0.1 |
+| Auditoria | Registro de operações em CSV | ✅ v0.1 |
+| Impressoras | Diagnósticos de impressão | 🔜 Planejado |
+| Drivers | Inventário e análise de drivers | 🔜 Planejado |
+| Manutenção | Assistentes de reparo controlados | 🔜 Planejado |
+| Interface gráfica | Aplicativo desktop para Windows | 🔜 Planejado |
+
+---
+
+## 💻 Tecnologias
+
+- **PowerShell 5.1:** linguagem principal.
+- **Windows Management Instrumentation (CIM):** consultas de hardware e sistema.
+- **NetTCPIP:** informações de rede.
+- **JSON:** exportação de relatórios.
+- **CSV:** histórico de ações.
+- **Git e GitHub:** versionamento e documentação.
+
+---
+
+## 🚀 Instalação e execução
+
+### Pré-requisitos
+
+- Windows 10 ou Windows 11.
+- Windows PowerShell 5.1.
+- Git para clonar o repositório.
+- Conta de usuário comum, sem necessidade de administrador.
+
+### 1. Clonar o projeto
+
+```powershell
+git clone https://github.com/Souzas-Dev/souzas-desk.git
+cd souzas-desk
+```
+
+### 2. Conferir o PowerShell
 
 ```powershell
 $PSVersionTable.PSVersion
 Get-ExecutionPolicy -List
+```
+
+### 3. Iniciar a ferramenta
+
+```powershell
 .\Start-SouzasDesk.ps1
 ```
 
-Se a política local impedir a execucao, consulte `docs/INICIANTES.md` antes de mudar qualquer configuração. Politicas corporativas devem ser respeitadas.
+Se a política de execução impedir o script, consulte o [guia de iniciantes](docs/INICIANTES.md). Não contorne políticas de segurança de computadores gerenciados.
 
-## Teste do projeto
+---
+
+## 🧭 Interface de terminal
+
+```text
+================================================
+            SOUZAS DESK | v0.1.0
+          Windows Support Toolkit
+================================================
+
+  [1] Informacoes do sistema
+  [2] Configuracao de rede
+  [3] Teste de conectividade (ping)
+  [4] Exportar relatorio JSON (sem IP/usuario)
+  [0] Sair
+
+------------------------------------------------
+Modo: diagnostico (sem alteracoes no Windows)
+
+Escolha uma opcao:
+```
+
+O menu centraliza as consultas e permite retornar à tela principal após cada diagnóstico.
+
+---
+
+## 🏗️ Arquitetura
+
+O projeto utiliza uma arquitetura modular, separando interface, consultas, relatórios e auditoria.
+
+```text
+souzas-desk/
+|
+|-- Start-SouzasDesk.ps1
+|
+|-- src/
+|   `-- Modules/
+|       |-- SystemInfo.psm1
+|       |-- NetworkInfo.psm1
+|       |-- Reporting.psm1
+|       `-- Audit.psm1
+|
+|-- tests/
+|   `-- Smoke.Tests.ps1
+|
+|-- docs/
+|   |-- INICIANTES.md
+|   |-- ARQUITETURA.md
+|   |-- SEGURANCA.md
+|   |-- ROADMAP.md
+|   |-- DEVLOG.md
+|   `-- GIT-GITHUB.md
+|
+|-- CHANGELOG.md
+|-- .gitignore
+`-- README.md
+```
+
+Cada módulo possui uma responsabilidade específica, facilitando manutenção, testes e expansão da ferramenta.
+
+---
+
+## 🧪 Testes
+
+O projeto inclui um teste básico de integridade e funcionamento.
 
 ```powershell
 .\tests\Smoke.Tests.ps1
 ```
 
-Os testes verificam o parser e os módulos e criam um relatório de teste **somente no seu computador**.
+O teste verifica:
 
-## Estrutura
+- Sintaxe dos scripts PowerShell.
+- Importação dos módulos.
+- Consultas básicas de sistema e rede.
+- Criação e estrutura de um relatório JSON.
+- Registro local de auditoria.
 
-```text
-souzas-desk/
-|-- Start-SouzasDesk.ps1        # menu principal
-|-- src/Modules/
-|   |-- SystemInfo.psm1         # consulta ao sistema
-|   |-- NetworkInfo.psm1        # consultas de rede e ping
-|   |-- Reporting.psm1          # relatorios JSON
-|   `-- Audit.psm1              # auditoria local sem dados sensiveis
-|-- docs/
-|   |-- INICIANTES.md           # aprendizado passo a passo
-|   |-- ARQUITETURA.md          # divisao de responsabilidades
-|   |-- SEGURANCA.md            # limites e controles
-|   `-- ROADMAP.md              # proximas versoes
-|-- tests/Smoke.Tests.ps1       # teste sem dependencias extras
-|-- .gitignore
-|-- CHANGELOG.md
-`-- README.md
-```
+**Status:** os testes estão implementados, mas a validação funcional completa em Windows ainda precisa ser registrada.
 
-## Documentação
+---
 
-Comece pelo [guia de iniciantes](docs/INICIANTES.md). Depois consulte [arquitetura](docs/ARQUITETURA.md), [segurança](docs/SEGURANCA.md), [Git e GitHub](docs/GIT-GITHUB.md), [diário de desenvolvimento](docs/DEVLOG.md) e [roadmap](docs/ROADMAP.md).
+## 🔒 Segurança e privacidade
 
-## Publicacao no GitHub
+A versão atual foi projetada para operar sem privilégios administrativos e sem alterações de configurações do sistema.
 
-Revise o conteudo antes de publicar. O `.gitignore` já exclui `data/` do controle de versao. Para iniciar o repositório local:
+- Não executa reparos automáticos.
+- Não instala drivers ou programas.
+- Não executa comandos remotos.
+- Não envia telemetria para servidores externos.
+- Realiza ping apenas para um destino informado pelo usuário.
+- Armazena os logs localmente.
+- Omite IP, hostname e usuário dos relatórios JSON.
 
-```powershell
-git init
-git branch -M main
-git add .
-git status
-git commit -m "feat: cria Souzas Desk v0.1 com diagnosticos seguros"
-```
+Os arquivos gerados ficam no diretório `data/`, excluído do versionamento pelo `.gitignore`.
 
-Para publicar usando GitHub CLI, com `gh` instalado e autenticado:
+> Os relatórios ainda podem conter características técnicas do computador. Revise os dados antes de compartilhar. Em ambientes corporativos, obtenha autorização antes de executar a ferramenta.
 
-```powershell
-gh auth status
-gh repo create Souzas-Dev/souzas-desk --public --source . --remote origin --push
-```
+Consulte a [política de segurança](docs/SEGURANCA.md).
 
-Se já houver um repositório com esse nome, escolha outro nome ou configure o remote manualmente; não force push de arquivos preexistentes.
+---
 
-**Licença:** ainda não definida. Escolha uma licença antes de permitir reutilizacao sob termos explicitos.
+## 🗺️ Roadmap
+
+| Versão | Objetivo | Status |
+|---|---|---|
+| v0.1 | Estrutura modular, diagnóstico básico e documentação | Implementada |
+| v0.1.1 | Melhorias de estabilidade, erros e testes | Planejada |
+| v0.2 | Diagnósticos ampliados de rede, drivers e impressoras | Planejada |
+| v0.3 | Assistentes de reparo com confirmação e segurança | Planejada |
+| v0.4 | Interface gráfica para Windows | Planejada |
+| v0.5 | Integrações opcionais com serviços Microsoft | Planejada |
+
+Acompanhe as próximas entregas no [roadmap técnico](docs/ROADMAP.md).
+
+---
+
+## 📚 Documentação
+
+| Documento | Conteúdo |
+|---|---|
+| [Guia de iniciantes](docs/INICIANTES.md) | Fundamentos de PowerShell e primeiros passos |
+| [Arquitetura](docs/ARQUITETURA.md) | Organização e responsabilidades dos módulos |
+| [Segurança](docs/SEGURANCA.md) | Privacidade e controles de segurança |
+| [Roadmap](docs/ROADMAP.md) | Planejamento das próximas versões |
+| [Diário de desenvolvimento](docs/DEVLOG.md) | Decisões e evolução técnica |
+| [Git e GitHub](docs/GIT-GITHUB.md) | Comandos de versionamento |
+
+---
+
+## 🤝 Contribuições
+
+Sugestões, relatórios de problemas e propostas de melhoria são bem-vindos por meio das Issues do GitHub.
+
+Antes de contribuir, consulte a documentação e evite incluir dados sensíveis, credenciais ou informações de computadores de terceiros.
+
+---
+
+## 📄 Licença
+
+O projeto ainda não possui uma licença de software definida. Até a inclusão de um arquivo `LICENSE`, não há autorização geral de reutilização, modificação ou redistribuição.
+
+---
+
+<div align="center">
+
+### Desenvolvido por Souzas Dev
+
+**Tecnologia • Automação • Infraestrutura • Cloud**
+
+[GitHub](https://github.com/Souzas-Dev) |
+[Repositório](https://github.com/Souzas-Dev/souzas-desk)
+
+**Souzas Desk — Windows Support Toolkit**
+
+</div>

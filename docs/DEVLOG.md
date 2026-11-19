@@ -1,32 +1,102 @@
-# Diario de desenvolvimento
+# Diário de desenvolvimento
 
-## 2026-11-19 - escopo da versao 0.1
+Registro técnico da evolução do projeto **Souzas Desk**.
+
+Este documento apresenta decisões de implementação, limitações identificadas, testes e aprendizados.
+
+---
+
+## 2026-11-19 — Estrutura inicial da v0.1
 
 ### Objetivo
 
-Criar o primeiro toolkit Windows Support Toolkit da Souzas Dev, com arquitetura modular e interfaces de terminal claras, sem modificar configurações do Windows.
+Desenvolver um toolkit modular para diagnóstico local de computadores Windows utilizando PowerShell 5.1.
 
-### Decisoes técnicas
+### Decisões técnicas
 
-- **PowerShell 5.1:** presente nas instalações usuais do Windows 10/11, adequado para comecar sem dependencias.
-- **Arquivos `.psm1`:** organizacao por responsabilidade.
-- **Objetos PowerShell:** resultados estruturados e testaveis.
-- **Sem elevacao:** não solicitar administrador para consultas.
-- **Logs sem identificadores:** salvar apenas data, ação e status.
-- **JSON anonimizado parcialmente:** omitir IP, usuário e hostname; caracteristicas técnicas permanecem.
+| Decisão | Justificativa |
+|---|---|
+| PowerShell 5.1 | Disponível nos ambientes Windows previstos |
+| Arquivos `.psm1` | Separação das responsabilidades |
+| `PSCustomObject` | Dados estruturados e reutilizáveis |
+| JSON | Relatórios legíveis por pessoas e aplicações |
+| CSV | Histórico simplificado das operações |
+| Sem administrador | Redução de privilégios desnecessários |
 
-### Entregas
+### Funcionalidades implementadas
 
-- Menu de sistema, rede, ping e relatórios.
-- Modulos de sistema, rede, relatórios e auditoria.
+- Menu interativo de diagnóstico.
+- Coleta de informações do sistema.
+- Consulta de configurações de rede.
+- Teste ICMP.
+- Exportação JSON.
+- Auditoria local.
 - Teste básico automatizado.
-- README e documentação de aprendizado, arquitetura e segurança.
 
-### Como registrar uma sessão real
+### Decisões de segurança
 
-Apos rodar `tests/Smoke.Tests.ps1` no Windows, atualize aqui com a **data do teste**, **versao do Windows/PowerShell**, **PASSOU/FALHOU** e **resumo do erro sem dados pessoais**. Não registre enderecos IP nem dados privados em capturas de tela.
+A versão inicial realiza consultas sem alterações de configuração.
 
-### Status de validação
+Relatórios e logs são armazenados localmente.
 
-- Arquivos gerados e pacote ZIP conferido.
-- **Execucao no Windows pendente:** o ambiente de preparacao do pacote não possui Windows PowerShell.
+A pasta `data/` não deve ser versionada.
+
+### Validação
+
+**Status: execução funcional completa no Windows ainda não comprovada neste registro.**
+
+O teste `tests/Smoke.Tests.ps1` está implementado, mas seu resultado em ambiente Windows precisa ser registrado.
+
+---
+
+## 2026-11-19 — Revisão técnica
+
+### Pontos identificados
+
+- Necessidade de separar falhas de diagnóstico de falhas na gravação dos logs.
+- Necessidade de ampliar os testes automatizados.
+- O diagnóstico de rede pode evoluir para verificações em etapas.
+- A configuração da versão poderá ser centralizada.
+- A documentação pode ser padronizada e expandida.
+
+### Próxima etapa proposta
+
+Refatoração de estabilidade e testes na versão v0.1.1.
+
+As melhorias citadas ainda não devem ser consideradas implementadas.
+
+---
+
+## Modelo para novas sessões
+
+Copie esta estrutura sempre que registrar uma sessão real de desenvolvimento:
+
+```text
+Data:
+Versão:
+Objetivo:
+
+Alterações realizadas:
+
+Arquivos modificados:
+
+Comandos executados:
+
+Testes realizados:
+
+Resultado: PASSOU / FALHOU / NÃO EXECUTADO
+
+Problemas encontrados:
+
+Próximos passos:
+```
+
+## Boas práticas de registro
+
+- Documentar decisões relevantes.
+- Registrar resultados reais de testes.
+- Não inventar execuções ou resultados.
+- Não incluir IPs privados, credenciais ou dados de terceiros.
+- Associar mudanças importantes a commits Git.
+
+Consulte também o [histórico de versões](../CHANGELOG.md).

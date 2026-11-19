@@ -1,45 +1,154 @@
-# Arquitetura da v0.1
+# Arquitetura do Souzas Desk
 
-## Objetivo
+Documentação técnica da arquitetura modular do **Souzas Desk v0.1.0**.
 
-Criar um painel de diagnóstico local em PowerShell sem executar alteracoes no Windows.
+## 1. Visão geral
 
-## Fluxo
+O Souzas Desk é uma aplicação de terminal desenvolvida em Windows PowerShell para executar diagnósticos locais em computadores Windows.
+
+A arquitetura separa a interface, as consultas de sistema e rede, a geração de relatórios e o registro de auditoria.
+
+**Princípio central:** cada módulo deve possuir uma responsabilidade bem definida.
+
+## 2. Organização do projeto
 
 ```text
-Usuario (terminal)
-        |
-        v
-Start-SouzasDesk.ps1 (menu)
-        |
-        +-- SystemInfo.psm1 ----> consulta CIM (Windows)
-        |
-        +-- NetworkInfo.psm1 ---> consulta IP e teste ICMP
-        |
-        +-- Reporting.psm1 -----> data/reports/*.json
-        |
-        `-- Audit.psm1 ---------> data/logs/acoes.csv
+souzas-desk/
+|
+|-- Start-SouzasDesk.ps1
+|
+|-- src/
+|   `-- Modules/
+|       |-- SystemInfo.psm1
+|       |-- NetworkInfo.psm1
+|       |-- Reporting.psm1
+|       `-- Audit.psm1
+|
+|-- tests/
+|   `-- Smoke.Tests.ps1
+|
+|-- docs/
+|   |-- ARQUITETURA.md
+|   |-- DEVLOG.md
+|   |-- GIT-GITHUB.md
+|   |-- INICIANTES.md
+|   |-- ROADMAP.md
+|   `-- SEGURANCA.md
+|
+|-- CHANGELOG.md
+|-- README.md
+`-- .gitignore
 ```
 
-`Start-SouzasDesk.ps1` coordena as funções e trata as opcoes digitadas. Cada `.psm1` concentra uma responsabilidade. `tests/Smoke.Tests.ps1` verifica sintaxe e o comportamento básico.
+## 3. Fluxo de execução
 
-## Contrato das funções
+```text
+             Usuário
+                |
+                v
+     Start-SouzasDesk.ps1
+                |
+         Menu interativo
+                |
+        +-------+--------+
+        |                |
+        v                v
+   SystemInfo        NetworkInfo
+        |                |
+        +-------+--------+
+                |
+                v
+            Reporting
+                |
+                v
+       Relatório JSON local
 
-- `Get-SDSystemInfo`: retorna objeto PowerShell com sistema, versao, build, arquitetura, processador, RAM e horas ligado.
-- `Get-SDNetworkInfo`: retorna zero ou mais objetos com interface, IPv4, gateway e DNS da interface ativa.
-- `Test-SDConnectivity -Target <host>`: testa ICMP, sem alterar rede; falha de ping não comprova falha de internet.
-- `Export-SDReport -SystemInfo ... -NetworkInfo ... -DataFolder ...`: gera JSON resumido e omite identificadores de rede e usuário.
-- `Write-SDAuditEvent -Action ... -Status ... -DataFolder ...`: escreve um evento em CSV sem dados de identificacao.
+     Audit registra ações
+       em arquivo CSV
+```
 
-## Convencoes
+O menu principal importa os módulos e coordena as operações.
 
-- Funcoes com prefixo `SD` para reduzir conflito de nomes.
-- Verbos PowerShell claros (`Get`, `Test`, `Export`, `Write`).
-- Mensagens curtas no menu e módulos que **retornam objetos**, em vez de formatar a saida internamente.
-- Erros tratados no ponto de entrada e sem esconder a causa principal na interface.
+## 4. Responsabilidades
 
-## Limitacoes conhecidas
+| Componente | Responsabilidade |
+|---|---|
+| `Start-SouzasDesk.ps1` | Exibir menu e coordenar ações |
+| `SystemInfo.psm1` | Consultar sistema, CPU e memória |
+| `NetworkInfo.psm1` | Consultar rede e testar conectividade |
+| `Reporting.psm1` | Produzir relatório JSON |
+| `Audit.psm1` | Registrar eventos locais |
+| `Smoke.Tests.ps1` | Verificar sintaxe e funcionamento básico |
 
-- Os módulos `NetTCPIP` e `CimCmdlets` precisam estar disponiveis no Windows.
-- Não existe suporte a execucao remota ou via Intune nesta versao.
-- Os testes de integração devem ser executados no Windows, em uma conta comum.
+## 5. Contratos das funções
+
+### Get-SDSystemInfo
+
+Retorna um objeto PowerShell contendo:
+
+- Nome e versão do Windows.
+- Número de build e arquitetura.
+- Processador.
+- Memória física em GB.
+- Tempo de atividade em horas.
+
+### Get-SDNetworkInfo
+
+Consulta as interfaces de rede ativas com IPv4.
+
+Retorna interface, IPv4, gateway e servidores DNS.
+
+### Test-SDConnectivity
+
+Recebe um destino e executa um teste ICMP.
+
+A ausência de resposta ao ping não comprova, isoladamente, falta de conectividade.
+
+### Export-SDReport
+
+Recebe informações de sistema e rede e cria um relatório JSON resumido.
+
+O relatório omite IP, gateway, DNS, hostname, usuário e identificadores de interface.
+
+### Write-SDAuditEvent
+
+Registra data/hora, código da ação e status em arquivo CSV.
+
+## 6. Padrões de desenvolvimento
+
+- Funções com verbos descritivos do PowerShell.
+- Prefixo `SD` para identificar funções do projeto.
+- Módulos separados por responsabilidade.
+- Retorno de objetos estruturados com `PSCustomObject`.
+- Formatação de resultados preferencialmente na interface.
+- Tratamento de erros com `try/catch`.
+- Operações de diagnóstico sem elevação de privilégios.
+
+## 7. Persistência de dados
+
+Arquivos gerados localmente:
+
+```text
+data/
+|-- reports/
+|   `-- relatorio-*.json
+`-- logs/
+    `-- acoes.csv
+```
+
+O diretório `data/` é ignorado pelo Git.
+
+Esses arquivos não devem ser publicados sem revisão.
+
+## 8. Limitações arquiteturais
+
+- Os módulos dependem de recursos disponíveis no Windows.
+- Ainda não existem testes de unidade isolados com mocks.
+- Falhas na auditoria podem interferir no tratamento de erros da ação.
+- Não existem interface gráfica ou execução remota.
+
+## 9. Evolução prevista
+
+As próximas etapas incluem testes mais robustos, melhorias de tratamento de erros, novos módulos de diagnóstico e uma possível interface gráfica.
+
+Consulte o [roadmap](ROADMAP.md).

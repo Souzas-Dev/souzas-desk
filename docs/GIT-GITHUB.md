@@ -1,57 +1,161 @@
-# Git e GitHub: do terminal ao repositório
+# Git e GitHub — Guia do projeto
 
-> Todos os comandos abaixo sao executados **dentro da pasta `souzas-desk`**. O primeiro push só deve ser feito depois de conferir `git status` e `git diff --cached`.
+Procedimentos de versionamento e publicação do **Souzas Desk**.
 
-## 1. Confira as ferramentas
+Repositório oficial:
+
+https://github.com/Souzas-Dev/souzas-desk
+
+## 1. Ferramentas
+
+O projeto utiliza Git para controle de versões e GitHub para hospedagem do código.
+
+Verifique a instalação:
 
 ```powershell
 git --version
+```
+
+O GitHub CLI é opcional:
+
+```powershell
 gh --version
 ```
 
-Se um comando não existir, instale a ferramenta pelo fornecedor oficial: https://git-scm.com/downloads e https://cli.github.com/.
+## 2. Clonar o projeto
 
-## 2. Crie um repositório local
-
-```powershell
-git init
-git branch -M main
-git add .
-git status
-git diff --cached --stat
-git commit -m "feat: souzas desk v0.1 - diagnostico e documentacao"
-```
-
-`git init` cria o histórico local. `git add .` seleciona arquivos para commit; `git status` permite revisar o que será incluido. `git commit` grava uma versao local.
-
-## 3. Publique no GitHub (opcional)
+Para obter uma cópia do repositório:
 
 ```powershell
-gh auth login
-gh auth status
-gh repo create Souzas-Dev/souzas-desk --public --source . --remote origin --push
+git clone https://github.com/Souzas-Dev/souzas-desk.git
+cd souzas-desk
 ```
 
-- O comando `gh auth login` solicita login no navegador/terminal se necessario.
-- `gh repo create` cria um repo novo. Não execute se já existir outro repo com esse nome, para evitar confusao.
-- `--public` torna os **arquivos versionados** publicos; `--push` envia o commit local.
+O repositório já existe. Não é necessário executar `git init` ou criar outro repositório.
 
-## 4. Atualizacoes futuras
+## 3. Consultar o estado do projeto
 
 ```powershell
 git status
-git add .
+git branch --show-current
+git remote -v
+git log -5 --oneline
+```
+
+Esses comandos permitem verificar alterações locais, branch, repositório remoto e commits recentes.
+
+## 4. Fluxo recomendado de atualização
+
+### Verificar alterações
+
+```powershell
+git status
+git diff
+git diff --check
+```
+
+### Selecionar arquivos
+
+Exemplo para uma alteração de documentação:
+
+```powershell
+git add README.md
+```
+
+Prefira selecionar arquivos explicitamente para evitar incluir dados locais.
+
+### Conferir o que será publicado
+
+```powershell
 git diff --cached
-git commit -m "docs: melhora guia de iniciantes"
-git push
-```
-
-## 5. Segurança antes de publicar
-
-```powershell
-git status --short
-git check-ignore data/logs/acoes.csv
 git diff --cached --name-only
 ```
 
-`git check-ignore` exibe o arquivo ignorado quando a regra do `.gitignore` está funcionando. Se algum arquivo privado aparecer no staging, use `git restore --staged <arquivo>` (substitua pelo caminho correto) e revise o `.gitignore`. Nunca publique senhas, tokens, nomes de pacientes ou arquivos de atendimento.
+### Criar um commit
+
+```powershell
+git commit -m "docs: melhora documentacao"
+```
+
+### Enviar ao GitHub
+
+```powershell
+git push origin main
+```
+
+## 5. Padrão de mensagens
+
+| Prefixo | Utilização |
+|---|---|
+| `feat:` | Nova funcionalidade |
+| `fix:` | Correção de problema |
+| `docs:` | Documentação |
+| `refactor:` | Reorganização sem mudar comportamento esperado |
+| `test:` | Inclusão ou melhoria de testes |
+| `chore:` | Manutenção e organização |
+
+Exemplos:
+
+```text
+feat: adiciona diagnostico de rede
+fix: corrige tratamento de erros
+docs: atualiza guia de iniciantes
+test: adiciona verificacao de relatorios
+```
+
+## 6. Trabalhar com branches
+
+Para uma alteração futura mais complexa:
+
+```powershell
+git switch -c docs/melhoria-documentacao
+```
+
+Após realizar alterações, revisar e criar o commit:
+
+```powershell
+git push -u origin docs/melhoria-documentacao
+```
+
+A branch poderá ser utilizada para abrir um Pull Request no GitHub.
+
+## 7. Segurança antes do push
+
+Confira os arquivos selecionados:
+
+```powershell
+git diff --cached --name-only
+git status --short
+```
+
+Verifique uma regra do `.gitignore`:
+
+```powershell
+git check-ignore data/logs/acoes.csv
+```
+
+Nunca publique credenciais, tokens, dados de clientes ou relatórios privados.
+
+O `.gitignore` impede a inclusão normal de determinados arquivos, mas não remove arquivos já versionados.
+
+## 8. Recuperação e histórico
+
+Visualizar alterações de um arquivo:
+
+```powershell
+git log --oneline -- README.md
+```
+
+Visualizar o conteúdo de uma versão:
+
+```powershell
+git show HEAD:README.md
+```
+
+Antes de desfazer alterações, confira o estado do repositório para não perder trabalho.
+
+## Referências oficiais
+
+- [Git](https://git-scm.com/docs)
+- [GitHub Docs](https://docs.github.com/)
+- [GitHub CLI](https://cli.github.com/)
