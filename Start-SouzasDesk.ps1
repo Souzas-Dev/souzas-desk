@@ -17,7 +17,7 @@ $ProjectRoot = Split-Path -Parent $MyInvocation.MyCommand.Path
 $ModulesFolder = Join-Path $ProjectRoot 'src\Modules'
 $DataFolder = Join-Path $ProjectRoot 'data'
 
-foreach ($ModuleName in @('SystemInfo.psm1', 'NetworkInfo.psm1', 'Reporting.psm1', 'Audit.psm1')) {
+foreach ($ModuleName in @('SystemInfo.psm1', 'NetworkInfo.psm1', 'Reporting.psm1', 'Audit.psm1', 'MenuAction.psm1')) {
     $ModulePath = Join-Path $ModulesFolder $ModuleName
     Import-Module -Name $ModulePath -Force -ErrorAction Stop
 }
@@ -40,24 +40,16 @@ function Show-SDMenu {
 
 function Invoke-SDMenuAction {
     param(
-        [Parameter(Mandatory = $true)][string] $ActionCode,
-        [Parameter(Mandatory = $true)][scriptblock] $Action
+        [Parameter(Mandatory = $true)]
+        [string]$ActionCode,
+
+        [Parameter(Mandatory = $true)]
+        [scriptblock]$Action
     )
 
-    try {
-        & $Action
-        Write-SDAuditEvent -Action $ActionCode -Status 'OK' -DataFolder $DataFolder
-    }
-    catch {
-        Write-Warning ('Falha ao executar {0}: {1}' -f $ActionCode, $_.Exception.Message)
-        try {
-            Write-SDAuditEvent -Action $ActionCode -Status 'ERRO' -DataFolder $DataFolder
-        }
-        catch {
-            Write-Warning 'Nao foi possivel salvar o registro local.'
-        }
-    }
-    [void] (Read-Host 'Pressione Enter para voltar ao menu')
+    Invoke-SDAction -ActionCode $ActionCode -Action $Action -DataFolder $DataFolder
+
+    [void](Read-Host 'Pressione Enter para voltar ao menu')
 }
 
 while ($true) {
