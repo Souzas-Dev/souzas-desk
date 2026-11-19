@@ -25,7 +25,7 @@ foreach ($ModuleName in @('SystemInfo.psm1', 'NetworkInfo.psm1', 'Reporting.psm1
 function Show-SDMenu {
     Clear-Host
     Write-Host '================================================' -ForegroundColor Cyan
-    Write-Host '            SOUZAS DESK | v0.1.0              ' -ForegroundColor Cyan
+    Write-Host '            SOUZAS DESK | v0.1.1              ' -ForegroundColor Cyan
     Write-Host '          Windows Support Toolkit             ' -ForegroundColor Cyan
     Write-Host '                By Souzas Dev                 ' -ForegroundColor DarkCyan
     Write-Host '================================================' -ForegroundColor Cyan

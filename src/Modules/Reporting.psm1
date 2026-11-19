@@ -22,7 +22,7 @@ function Export-SDReport {
     # Nao inclui IP, gateway, DNS, username, hostname nem nome de interface.
     $Report = [pscustomobject][ordered]@{
         Projeto                 = 'Souzas Desk'
-        Versao                  = '0.1.0'
+        Versao                  = '0.1.1'
         GeradoEm                = (Get-Date).ToString('o')
         Sistema                 = $SystemInfo.Sistema
         VersaoWindows           = $SystemInfo.Versao
