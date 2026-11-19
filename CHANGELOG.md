@@ -8,7 +8,7 @@ As alterações são classificadas como adicionadas, modificadas, corrigidas ou 
 
 ---
 
-## [0.1.1] - Em preparação
+## [0.1.1] - 2026-11-19
 
 ### Adicionado
 

@@ -39,7 +39,7 @@ Seu desenvolvimento também tem caráter educacional, permitindo estudar PowerSh
 - Manter registros locais das operações.
 - Evoluir para uma plataforma modular de suporte.
 
-> **Versão em preparação:** a v0.1.1 é um MVP de diagnóstico. Não executa reparos nem altera configurações do Windows.
+> **Versão atual:** a v0.1.1 é um MVP de diagnóstico. Não executa reparos nem altera configurações do Windows.
 
 ---
 
@@ -221,7 +221,7 @@ Consulte a [política de segurança](docs/SEGURANCA.md).
 | Versão | Objetivo | Status |
 |---|---|---|
 | v0.1 | Estrutura modular, diagnóstico básico e documentação | Implementada |
-| v0.1.1 | Melhorias de estabilidade, erros e testes | Em preparação |
+| v0.1.1 | Melhorias de estabilidade, erros e testes | Implementada |
 | v0.2 | Diagnósticos ampliados de rede, drivers e impressoras | Planejada |
 | v0.3 | Assistentes de reparo com confirmação e segurança | Planejada |
 | v0.4 | Interface gráfica para Windows | Planejada |

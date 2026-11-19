@@ -9,7 +9,7 @@ O roadmap apresenta intenções de desenvolvimento, não prazos ou entregas gara
 | Versão | Foco | Situação |
 |---|---|---|
 | v0.1.0 | Diagnósticos básicos e arquitetura modular | Implementada |
-| v0.1.1 | Estabilidade, tratamento de erros e testes | Preparando release |
+| v0.1.1 | Estabilidade, tratamento de erros e testes | Implementada |
 | v0.2 | Diagnósticos ampliados | Planejada |
 | v0.3 | Assistentes de reparo controlados | Planejada |
 | v0.4 | Interface gráfica para Windows | Planejada |
@@ -37,10 +37,12 @@ O roadmap apresenta intenções de desenvolvimento, não prazos ou entregas gara
 - [x] Melhorar mensagens de falha.
 - [x] Criar testes de unidade com mocks.
 - [x] Adicionar validação de entradas.
-- [ ] Melhorar gerenciamento de logs.
 - [x] Configurar execução automatizada de testes.
-- [ ] Centralizar informações de versão.
 
+### Pendencias para versoes futuras
+
+- [ ] Melhorar gerenciamento de logs.
+- [ ] Centralizar informacoes de versao.
 ## v0.2 — Diagnósticos ampliados
 
 - [ ] Diagnóstico de conectividade em etapas.
