@@ -8,6 +8,41 @@ As alterações são classificadas como adicionadas, modificadas, corrigidas ou 
 
 ---
 
+## [0.1.1] - 2026-11-19
+
+### Adicionado
+
+- Testes automatizados de execucao e auditoria.
+- Teste de integracao com gravacao real de CSV.
+- Testes de validacao de entradas e falhas de armazenamento.
+- PSScriptAnalyzer 1.25.0 integrado ao GitHub Actions.
+- Credito "By Souzas Dev" no menu principal.
+- Arquivo NOTICE para registrar a autoria original.
+
+### Corrigido
+
+- Separacao entre erros de diagnostico e falhas de auditoria.
+- Validacao de destinos IPv4, IPv6 e hostnames.
+- Rejeicao de relatorios sem o campo essencial Sistema.
+- Tratamento de falhas de gravacao de arquivos.
+- Formatacao UTF-8 do workflow de CI.
+
+### Validacao
+
+- Testes automatizados aprovados no Windows PowerShell 5.1.
+- Menu e opcoes 1 a 4 testados no Windows 10 Pro, build 19045.
+- Teste de ping com resposta ICMP confirmada.
+- Exportacao JSON verificada.
+- Auditoria CSV validada com status OK nas quatro acoes.
+
+### Limitacoes
+
+- Validacao manual realizada em uma configuracao de Windows.
+- Aplicativo ainda sem interface grafica ou reparos automaticos.
+- Licenciamento de redistribuicao ainda em definicao (Issue #11).
+
+---
+
 ## [0.1.0] - 2026-11-19
 
 ### Adicionado

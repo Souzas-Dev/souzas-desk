@@ -67,6 +67,36 @@ As melhorias citadas ainda não devem ser consideradas implementadas.
 
 ---
 
+## 2026-11-19 — Validacao funcional da v0.1.1
+
+### Ambiente
+
+- Windows 10 Pro, build 19045.
+- Windows PowerShell 5.1.
+- Execucao local sem elevacao administrativa.
+
+### Testes realizados
+
+- Opcao 1: informacoes do sistema exibidas.
+- Opcao 2: interfaces e configuracoes de rede exibidas.
+- Opcao 3: ping para google.com.br com resposta ICMP.
+- Opcao 4: relatorio JSON criado e inspecionado.
+- Auditoria: registros SISTEMA, REDE, PING e RELATORIO com status OK.
+- Menu: credito By Souzas Dev exibido e opcao 0 funcional.
+- GitHub Actions: verificacoes automatizadas aprovadas.
+
+### Resultado
+
+PASSOU nos cenarios executados.
+
+### Limitacoes
+
+Validacao manual em apenas um computador.
+Necessarios testes adicionais para ampliar a compatibilidade.
+A definicao da licenca de redistribuicao permanece pendente.
+
+---
+
 ## Modelo para novas sessões
 
 Copie esta estrutura sempre que registrar uma sessão real de desenvolvimento:

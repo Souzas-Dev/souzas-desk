@@ -9,13 +9,13 @@ O roadmap apresenta intenções de desenvolvimento, não prazos ou entregas gara
 | Versão | Foco | Situação |
 |---|---|---|
 | v0.1.0 | Diagnósticos básicos e arquitetura modular | Implementada |
-| v0.1.1 | Estabilidade, tratamento de erros e testes | Planejada |
+| v0.1.1 | Estabilidade, tratamento de erros e testes | Implementada |
 | v0.2 | Diagnósticos ampliados | Planejada |
 | v0.3 | Assistentes de reparo controlados | Planejada |
 | v0.4 | Interface gráfica para Windows | Planejada |
 | v0.5 | Integrações opcionais Microsoft | Planejada |
 
-> A v0.1.0 possui funcionalidades implementadas, mas ainda requer registro de validação funcional completa no Windows.
+> Validacao funcional das opcoes 1 a 4 registrada em Windows 10 Pro, build 19045. Ainda sao recomendados testes em outros ambientes.
 
 ---
 
@@ -29,18 +29,20 @@ O roadmap apresenta intenções de desenvolvimento, não prazos ou entregas gara
 - [x] Logs CSV.
 - [x] Documentação técnica.
 - [x] Smoke test implementado.
-- [ ] Registrar validação funcional completa no Windows.
+- [x] Registrar validacao funcional das opcoes 1 a 4 no Windows 10 Pro.
 
 ## v0.1.1 — Qualidade e estabilidade
 
-- [ ] Separar erros de diagnóstico e auditoria.
-- [ ] Melhorar mensagens de falha.
-- [ ] Criar testes de unidade com mocks.
-- [ ] Adicionar validação de entradas.
-- [ ] Melhorar gerenciamento de logs.
-- [ ] Configurar execução automatizada de testes.
-- [ ] Centralizar informações de versão.
+- [x] Separar erros de diagnóstico e auditoria.
+- [x] Melhorar mensagens de falha.
+- [x] Criar testes de unidade com mocks.
+- [x] Adicionar validação de entradas.
+- [x] Configurar execução automatizada de testes.
 
+### Pendencias para versoes futuras
+
+- [ ] Melhorar gerenciamento de logs.
+- [ ] Centralizar informacoes de versao.
 ## v0.2 — Diagnósticos ampliados
 
 - [ ] Diagnóstico de conectividade em etapas.

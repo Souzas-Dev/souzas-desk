@@ -6,7 +6,7 @@
 
 **Diagnóstico, automação e suporte técnico para ambientes Windows com PowerShell.**
 
-![Version](https://img.shields.io/badge/Version-0.1.0-blue)
+![Version](https://img.shields.io/badge/Version-0.1.1-blue)
 ![PowerShell](https://img.shields.io/badge/PowerShell-5.1%2B-5391FE?logo=powershell&logoColor=white)
 ![Windows](https://img.shields.io/badge/Windows-10%20%7C%2011-0078D4?logo=windows)
 ![Status](https://img.shields.io/badge/Status-MVP-orange)
@@ -39,7 +39,7 @@ Seu desenvolvimento também tem caráter educacional, permitindo estudar PowerSh
 - Manter registros locais das operações.
 - Evoluir para uma plataforma modular de suporte.
 
-> **Versão atual:** a v0.1.0 é um MVP de diagnóstico. Não executa reparos nem altera configurações do Windows.
+> **Versão atual:** a v0.1.1 é um MVP de diagnóstico. Não executa reparos nem altera configurações do Windows.
 
 ---
 
@@ -107,7 +107,7 @@ Se a política de execução impedir o script, consulte o [guia de iniciantes](d
 
 ```text
 ================================================
-            SOUZAS DESK | v0.1.0
+            SOUZAS DESK | v0.1.1
           Windows Support Toolkit
                 By Souzas Dev
 ================================================
@@ -142,10 +142,15 @@ souzas-desk/
 |       |-- SystemInfo.psm1
 |       |-- NetworkInfo.psm1
 |       |-- Reporting.psm1
-|       `-- Audit.psm1
+|       |-- Audit.psm1
+|       `-- MenuAction.psm1
 |
 |-- tests/
-|   `-- Smoke.Tests.ps1
+|   |-- Smoke.Tests.ps1
+|   |-- Action.Tests.ps1
+|   |-- Audit.Integration.Tests.ps1
+|   |-- Resilience.Tests.ps1
+|   `-- Lint.Tests.ps1
 |
 |-- docs/
 |   |-- INICIANTES.md
@@ -166,21 +171,28 @@ Cada módulo possui uma responsabilidade específica, facilitando manutenção, 
 
 ## 🧪 Testes
 
-O projeto inclui um teste básico de integridade e funcionamento.
+O Souzas Desk possui testes automatizados para Windows PowerShell 5.1.
 
 ```powershell
+.\tests\Action.Tests.ps1
+.\tests\Audit.Integration.Tests.ps1
+.\tests\Resilience.Tests.ps1
 .\tests\Smoke.Tests.ps1
+.\tests\Lint.Tests.ps1
 ```
 
-O teste verifica:
+O teste de lint requer PSScriptAnalyzer 1.25.0.
 
-- Sintaxe dos scripts PowerShell.
-- Importação dos módulos.
-- Consultas básicas de sistema e rede.
-- Criação e estrutura de um relatório JSON.
-- Registro local de auditoria.
+Os testes verificam a execucao das acoes, auditoria CSV real,
+validacao de entradas, falhas de armazenamento, sintaxe e
+qualidade estatica do PowerShell.
 
-**Status:** os testes estão implementados, mas a validação funcional completa em Windows ainda precisa ser registrada.
+**Validacao manual:** as opcoes 1 a 4 do menu foram executadas
+com sucesso em Windows 10 Pro, build 19045, em 2026-11-19.
+O JSON e os registros CSV foram conferidos.
+
+Essa validacao representa uma configuracao de Windows.
+Testes em outros computadores ainda sao recomendados.
 
 ---
 
@@ -209,7 +221,7 @@ Consulte a [política de segurança](docs/SEGURANCA.md).
 | Versão | Objetivo | Status |
 |---|---|---|
 | v0.1 | Estrutura modular, diagnóstico básico e documentação | Implementada |
-| v0.1.1 | Melhorias de estabilidade, erros e testes | Planejada |
+| v0.1.1 | Melhorias de estabilidade, erros e testes | Implementada |
 | v0.2 | Diagnósticos ampliados de rede, drivers e impressoras | Planejada |
 | v0.3 | Assistentes de reparo com confirmação e segurança | Planejada |
 | v0.4 | Interface gráfica para Windows | Planejada |
