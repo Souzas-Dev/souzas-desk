@@ -1,4 +1,4 @@
-name: CI - Souzas Desk
+﻿name: CI - Souzas Desk
 
 on:
   push:
@@ -12,7 +12,7 @@ permissions:
 
 jobs:
   smoke-tests:
-    name: PowerShell 5.1 - Smoke Tests
+    name: PowerShell 5.1 - Quality Checks
     runs-on: windows-2022
     timeout-minutes: 10
 
@@ -41,3 +41,25 @@ jobs:
         run: |
           & .\tests\Smoke.Tests.ps1
           if (-not $?) { exit 1 }
+
+      - name: Testar auditoria CSV real
+        shell: powershell
+        run: |
+          & .\tests\Audit.Integration.Tests.ps1
+          if (-not $?) { exit 1 }
+
+      - name: Instalar PSScriptAnalyzer
+        shell: powershell
+        run: |
+          [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+          if (-not (Get-PackageProvider -ListAvailable -Name NuGet -ErrorAction SilentlyContinue)) {
+            Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Scope CurrentUser -Force | Out-Null
+          }
+          Install-Module -Name PSScriptAnalyzer -RequiredVersion 1.25.0 -Scope CurrentUser -Repository PSGallery -Force -ErrorAction Stop
+
+      - name: Executar PSScriptAnalyzer
+        shell: powershell
+        run: |
+          & .\tests\Lint.Tests.ps1
+          if (-not $?) { exit 1 }
+
