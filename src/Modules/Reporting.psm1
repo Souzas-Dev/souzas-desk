@@ -10,6 +10,10 @@ function Export-SDReport {
         [Parameter(Mandatory = $true)][string] $DataFolder
     )
 
+    if ([string]::IsNullOrWhiteSpace([string]$SystemInfo.Sistema)) {
+        throw 'Dados de sistema incompletos: campo Sistema obrigatorio.'
+    }
+
     $ReportsFolder = Join-Path $DataFolder 'reports'
     if (-not (Test-Path -LiteralPath $ReportsFolder -PathType Container)) {
         New-Item -Path $ReportsFolder -ItemType Directory -Force -ErrorAction Stop | Out-Null

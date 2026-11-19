@@ -1,4 +1,4 @@
-﻿name: CI - Souzas Desk
+name: CI - Souzas Desk
 
 on:
   push:
@@ -48,6 +48,11 @@ jobs:
           & .\tests\Audit.Integration.Tests.ps1
           if (-not $?) { exit 1 }
 
+      - name: Testar validacao e resiliencia
+        shell: powershell
+        run: |
+          & .\tests\Resilience.Tests.ps1
+          if (-not $?) { exit 1 }
       - name: Instalar PSScriptAnalyzer
         shell: powershell
         run: |
@@ -62,4 +67,3 @@ jobs:
         run: |
           & .\tests\Lint.Tests.ps1
           if (-not $?) { exit 1 }
-
